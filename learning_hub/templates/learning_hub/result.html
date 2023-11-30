@@ -1,0 +1,39 @@
+{% extends "learning_hub/base.html" %}
+
+{% load static %}
+
+{% block main %}
+<section id="main" style="width: 81%"> 
+    <h1>Search Results</h1>
+
+    <div class="table-responsive">
+        <table class="table table-sm" style="width: 100%">
+            <thead>
+                <tr class="table-dark">
+                    <th scope="col" style="width: 5%">ID</th>
+                    <th scope="col" style="width: 35%">Title</th>
+                    <th scope="col" style="width: 36%">Keywords</th>
+                    <th scope="col" style="width: 8%">View</th>
+                    <th scope="col" style="width: 8%">Details</th>
+                    <th scope="col" style="width: 8%">Answer</th>
+                </tr>
+            </thead>
+           
+        {% for lesson in lessons %}
+            <tbody>
+                <tr>
+                    <th scope="row">{{ lesson.id }}</th>
+                    <td>{{ lesson.title }}</td> 
+                    <td>{{ lesson.keywords }}</td>
+                    <td><a class="btn btn-secondary btn-sm;" href="{{ lesson.problem_document.url }}" role="button" target="_blank">Question</a></td>
+                    <!-- Modal -->
+                    <td><a class="btn btn-secondary btn-sm;" href="lesson_detail/{{ lesson.id }}" role="button">Details</a></td> 
+                    <td><a class="btn btn-secondary btn-sm;" href="{{ lesson.answer_document.url }}" role="button" target="_blank">Answer</a></td>
+                </tr>
+            </tbody>
+        {% endfor %} 
+        </table>   
+    </div>
+</section>
+
+{% endblock %}

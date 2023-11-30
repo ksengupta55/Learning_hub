@@ -1,0 +1,28 @@
+{% extends "pages/page.html" %}
+
+{% load django_bootstrap5%}
+
+{% block main %}
+<section id="main" style="width: 81%">
+    <h1>Contact us</h1>
+
+    {% if submitted %}
+    <p>
+        Your message was submitted successfully. Thank you.
+    </p>
+    {% else %}
+        <div class="mb-3 form-check">
+            <form class="success" action="" enctype="multipart/form-data" method="post" novalidate>
+                <div class="table-responsive text-nowrap">
+                    <!--Table-->
+                    <table class="table">
+                        {% bootstrap_form form %}
+                        {% bootstrap_button button_type="submit" content="Send" %}
+                    </table>
+                </div>
+                {% csrf_token %}
+            </form>
+        </div>
+    {% endif %}
+</section> 
+{% endblock %}

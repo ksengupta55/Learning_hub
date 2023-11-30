@@ -1,0 +1,28 @@
+{% extends "learning_hub/base.html" %}
+
+{% block main %}
+<h1>Upload Videos</h1>
+
+{% if submitted %}
+    <p class="success">
+        The video was stored successfully. Thank you.
+    </p>
+{% else %}
+    <div class="mb-3 form-check">
+        <form action="" enctype="multipart/form-data" method="post" novalidate>
+            <div class="table-responsive">
+                <table class="table">
+                    {{ form.as_table }}
+                    <tr>
+                        <td scope="row" width="25%">&nbsp;</td>
+                        <td><input type="submit" value="Submit" class="form-control-file"></td>
+                    </tr>
+                </table>
+                    {% csrf_token %}
+            </div>
+        </form>
+    </div>
+{% endif %}
+{% endblock %}
+
+

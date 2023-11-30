@@ -1,0 +1,84 @@
+{% load static %}
+
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width-device-width initial-scale=1 shrink-to-fit=no">
+        <link href="{% static '/main.css' %}" rel="stylesheet" type="text/css">
+
+        {% load django_bootstrap5 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+
+    </head>
+    <body>
+        <div class="p-3 mb-4 bg-light border rounded-3">
+            <div class="container-fluid py-4">
+                {% block title %}
+                <title>Unlinked Document</title>
+                {% endblock %}    
+                <header id="header" style="width: 100%">
+                    {% block header %}
+                    <nav class="navbar navbar-expand-md navbar-light bg-light mb-4 border">
+                        <div class="container-fluid">    
+                            <img src="{% static 'logo.png' %}" alt=""/>
+                            <img class="img-fluid" src="{% static 'top_banner.jpeg' %}" alt=""/>
+                            <span></span>
+                        </div>
+                        <div id="d-grid gap-2;" style="padding: 60px;">
+                            <ul class="navbar-nav me-auto mb-2 mb-md-O;">
+                                <li>
+                                    {% if user.is_authenticated %}
+                                        Hello, {{ user.username }}
+                                        <form action="{% url 'logout' %}" method="post">
+                                            {% csrf_token %}
+                                            <button name="submit" class="btn btn-primary btn-sm;">Log&nbsp;out</button>
+                                        </form>
+                                        {% else %} 
+                                            <!--<p>You are not logged in</p>-->
+                                            <a class="btn btn-primary btn-sm;"
+                                                href="{% url 'login' %}">Log&nbsp;in</a>
+                                    {% endif %}   
+                                </li>
+                            </ul>
+                            <span ></span>
+                        </div>
+                    </nav>
+                    
+                    {% endblock %}
+                </header>  
+                
+                {% block sidebar %}
+                    <aside id="leftsidebar" style="width: 14%">
+                        <ul style="padding: 0cqb; list-style-type: none">
+                            <li><a href="/">LMS Home</a></li>
+                            <li><a href="/about">About</a></li>
+                            <li><a href="/services">Services</a></li>
+                            <li><a href="/filtered_lesson">Problems Database</a></li>
+                            <li><a href="/video_list">Video Database</a></li>
+                            <li><a href="/new_lesson">Add Lesson</a></li>
+                            <li><a href="/new_video">Add Video</a></li>
+                            <li><a href="/contact">Contact Us</a></li>
+                            <li><a href="/search">Search</a></li>
+                        </ul>  
+                    </aside>
+                {% endblock %}
+                {% block main %}
+                    <main id="main" style="width: 83%">
+                        <h1 class="display-3">Welcome to Learning Hub</h1>
+                        <p class="lead"> This portal helps you learn any topic you are interested in.</p>
+                        Not a member? <a class="btn btn-primary btn-sm;"
+                                href="{% url 'register' %}">Register &raquo;</a>    
+                    </main>
+                {% endblock %}
+    
+                {% block content %}{% endblock content %}
+                <footer id="footer">Copyright &copy; 2023 LMS Web Design</footer>
+    
+        </div>
+        </div>
+   </body>
+</html>
+
+

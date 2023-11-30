@@ -1,0 +1,11 @@
+{% extends "learning_hub/base.html" %}
+
+{% block main %}
+<h1>Problems Database</h1>   
+<div class="container">
+  {% for x in lesson %}
+    <h3 class="text-center mt-2 mb-2">{{ x.title }}</h3>
+      <a class="btn btn-secondary btn-sm;" href="{{ x.problem_document.url }}" role="button">View</a>
+  {% endfor %}
+</div>
+{% endblock %}

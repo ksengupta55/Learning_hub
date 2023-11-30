@@ -1,0 +1,32 @@
+{% extends "learning_hub/base.html" %}
+
+{% load django_bootstrap5%}
+
+{% block main %}
+<section id="main" style="width: 80%"> 
+    <h1>Lesson Details</h1>
+
+    <table class="table table-striped">
+        <tr><td style="width: 25%;">ID: </td><td>{{ lesson.id }}</td></tr>
+        <tr><td style="width: 25%">Title: </td><td>{{ lesson.title }}</td></tr>
+        <tr><td style="width: 25%">Created by: </td><td>{{ lesson.createdby }}</td></tr>
+        <tr><td style="width: 25%">Keywords: </td><td>{{ lesson.keywords }}</td></tr>
+        <tr><td style="width: 25%">Created on: </td><td>{{ lesson.submitted }}</td></tr>
+        <tr style="max-height: 50pt; margin:auto;"><td colspan="2">
+            Problem:
+        </td></tr> 
+        <tr>
+            <td colspan="2">
+                <div class="form-group">
+                    <textarea class="container-fluid" id="exampleFormControlTextarea1" rows="3">
+                        {{ lesson.problem_statement }}
+                    </textarea>
+                </div>                    
+            </td>
+        </tr>
+  
+    </table>
+</section>
+
+
+{% endblock %}

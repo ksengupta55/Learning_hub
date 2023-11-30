@@ -1,0 +1,90 @@
+{% extends "learning_hub/base.html" %}
+
+{% load static %}
+
+{% block main %}
+<h1>Filter Lessons</h1>
+
+{% if submitted %}
+    <p class="success">
+        The lesson was stored successfully. Thank you.
+        {{ category.name }}
+    </p>
+{% else %}
+    <div class="mb-3 form-check">
+        <form action="" enctype="multipart/form-data" method="post" class="container needs-validation" novalidate>
+            <div class="table-responsive">
+                <table align="right" style="width: 4.5in;">
+                    <tr>
+                        {% for field in form %}
+                        <td style="width: 4%">
+                            {{ field.label_tag }} {{ field }}
+                        </td>
+                        {% endfor %}
+                        <td style="width: 8%">
+                            <input type="submit" value="Go" class="form-control-file">
+                        </td>
+                    </tr>
+                {% csrf_token %}
+            </div>
+        </form>
+    </div>
+
+
+    <div class="table-responsive">
+        <table class="table table-sm" style="width: 100%">
+            <thead>
+                <tr>
+                    <th scope="col" style="width: 5%">ID</th>
+                    <th scope="col" style="width: 33%">Title</th>
+                    <th scope="col" style="width: 33%">Keywords</th>
+                    <th scope="col" style="width: 8%">View</th>
+                    <th scope="col" style="width: 8%">Details</th>
+                    <th scope="col" style="width: 8%">Answer</th>
+                    {% if user.username == 'admin' %}
+                        <th scope="col" style="width: 5%">Delete</th>
+                    {% endif %}    
+                </tr>
+            </thead>              
+            {# {% for lesson in page_obj %} #}
+            {% for x in page_obj %}
+            {# Each "lesson" is a Lesson model object. #}
+            <tbody>
+                <tr>
+                    <th scope="row">{{ x.id }}</th>
+                    <td>{{ x.title|upper }}</td> 
+                    <td>{{ x.keywords }}</td>
+                    <td><a class="btn btn-secondary btn-sm;" href="{{ x.problem_document.url }}" role="button" target="_blank">Question</a></td>
+                    <td><a class="btn btn-secondary btn-sm;" href="lesson_detail/{{ x.id }}" role="button">Details</a></td> 
+                    <td><a class="btn btn-secondary btn-sm;" href="{{ x.answer_document.url }}" role="button" target="_blank">Answer</a></td>
+                    {% if user.username == 'admin' %}
+                        <td><a href="lesson_delete/{{ x.id }}"><img class="img-fluid" src="{% static 'delete_icon.png' %}" alt=""/></a></td>
+                    {% endif %}
+                </tr>
+            </tbody>
+            {% endfor %} 
+        </table>   
+    </div>
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div> 
+    
+{% endif %}
+{% endblock %}
+
+

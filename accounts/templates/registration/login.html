@@ -1,0 +1,29 @@
+{% extends "learning_hub/base.html" %}
+
+{% load django_bootstrap5%}
+
+
+{% block main %}
+<section id="main" style="width: 80%">
+    <h2>Log in to your account</h2>
+
+    
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
+        <label class="form-check-label" for="form2Example31">Remember me</label>
+        <div class="row mb-4">
+          <div class="mt-3">
+            {% bootstrap_button button_type="submit" content="Log in" %}
+          </div>
+          <div class="col d-flex justify-content-center">
+            <div class="mt-3">
+              <a href="{% url 'password_reset' %}">Forgot password?</a>
+            </div>
+          </div>
+        </div>
+    </form>
+    
+</section>
+{% endblock %}

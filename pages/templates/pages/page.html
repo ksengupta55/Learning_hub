@@ -1,0 +1,23 @@
+{% extends "learning_hub/base.html" %}
+
+{% load django_bootstrap5%}
+
+{% block main %}
+<section id="main">
+    <h1>{{ title }}</h1>
+    <div class="container">
+        <div class="jumbotron">
+            {% autoescape off %}
+                {{ content }}
+            {% endautoescape %}  
+            <p>
+                Page last updated: {{ last_updated|date:'D d F Y' }}
+            </p>
+        </div>
+    </div>
+
+</section>
+{% endblock %}
+
+
+

@@ -1,0 +1,58 @@
+{% extends "learning_hub/base.html" %}
+
+{% block main %}
+<section id="main" style="width: 80%">
+    <h1>Search</h1>
+
+    {% if submitted %}
+    <p>
+        Your message was submitted successfully. Thank you.
+    </p>
+    {% else %}
+    <div class="mb-3 form-check">
+        <form action="" enctype="multipart/form-data" method="post" novalidate>
+            <div class="table-responsive">
+                <!--Table-->
+                <table class="table table-striped">
+                    <tr>
+                        <td colspan="2">
+                            <div class="container-fluid">
+                                <ul>
+                                    <li>
+                                        Enter your question or a related keyword in the search field.
+                                    </li>
+                                    <li>
+                                        Click "Search".
+                                    </li>
+                                    <li>
+                                        If your question exists in the database, you'll be redirected 
+                                        to the answer screen.
+                                    </li>
+                                    <li>
+                                       If not, your question will be sent to the instructors and they 
+                                        will upload an answer within a day.
+                                    </li> 
+                                </ul> 
+                                Remember that our instructors are working to provide you with the information you need as quickly as possible. 
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <form action="{% url 'learning_hub:search' %}" method="post" class="row g-3 needs-validation">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <textarea class="form-control" type="text" name="search_text" id="search_text" rows="10" style="font-size: 14px!important;"></textarea>      
+                                    <input type="submit" value="Search" class="btn btn-primary btn lg mt-1" required/>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            {% csrf_token %}
+        </form>
+        {% endif %}
+    </div>
+</section> 
+{% endblock %}

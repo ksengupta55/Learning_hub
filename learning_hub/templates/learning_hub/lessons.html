@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% load django_bootstrap5%}
+
+{% block main %}
+
+    <section id="main" style="width: 81%"> 
+        <h1>All Lessons</h1>
+
+       
+             
+        <div class="table-responsive">
+            <table class="table table-sm" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th scope="col" style="width: 5%">ID</th>
+                        <th scope="col" style="width: 30%">Title</th>
+                        <th scope="col" style="width: 10%">Category</th>
+                        <th scope="col" style="width: 31%">Keywords</th>
+                        <th scope="col" style="width: 8%">View</th>
+                        <th scope="col" style="width: 8%">Details</th>
+                        <th scope="col" style="width: 8%">Answer</th>
+                    </tr>
+                </thead>              
+                {% for lesson in page_obj %}
+                {# Each "lesson" is a Lesson model object. #}
+                <tbody>
+                    <tr>
+                        <th scope="row">{{ lesson.id }}</th>
+                        <td>{{ lesson.title|upper }}</td> 
+                        <td>{{ lesson.category.name }}</td>
+                        <td>{{ lesson.keywords }}</td>
+                        <td><a class="btn btn-secondary btn-sm;" href="{{ lesson.problem_document }}" role="button" target="_blank">Question</a></td>
+                        <td><a class="btn btn-secondary btn-sm;" href="lesson_detail/{{ lesson.id }}" role="button">Details</a></td> 
+                        <td><a class="btn btn-secondary btn-sm;" href="{{ lesson.answer_document }}" role="button" target="_blank">Answer</a></td>
+                    </tr>
+                </tbody>
+                {% endfor %} 
+            </table>   
+        </div>
+
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div> 
+    </section>   
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "learning_hub/base.html" %}
+
+{% block main %}
+<section id="main" style="width: 80%">
+    <h1>Error page</h1>
+    {% if messages %}
+    <section>
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    </section>
+    {% endif %}
+</section>
+ 
+
+
+{% endblock %}

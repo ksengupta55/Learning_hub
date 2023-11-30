@@ -1,0 +1,12 @@
+{% extends "learning_hub/base.html" %}
+
+{% block main %}
+<h1>Video Database</h1>   
+<div class="container">
+  {% for x in video %}
+    <h3 class="text-center mt-2 mb-2">{{ x.caption }}</h3>
+    <video width="320" height="240" src="{{ x.video.url }}" class="object-fit-scale" type="video/mp4" controls></video>
+      <!--<a class="btn btn-secondary btn-sm;" href="{{ x.video }}" role="button" target="_blank">View</a>-->
+  {% endfor %}
+</div>
+{% endblock %}
