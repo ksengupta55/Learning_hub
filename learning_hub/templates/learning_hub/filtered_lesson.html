@@ -8,32 +8,28 @@
 {% if submitted %}
     <p class="success">
         The lesson was stored successfully. Thank you.
-        {{ category.name }}
+        {{ category_name }}
     </p>
 {% else %}
-    <div class="mb-3 form-check">
-        <form action="" enctype="multipart/form-data" method="post" class="container needs-validation" novalidate>
-            <div class="table-responsive">
-                <table align="right" style="width: 4.5in;">
-                    <tr>
-                        {% for field in form %}
-                        <td style="width: 4%">
-                            {{ field.label_tag }} {{ field }}
-                        </td>
-                        {% endfor %}
-                        <td style="width: 8%">
-                            <input type="submit" value="Go" class="form-control-file">
-                        </td>
-                    </tr>
-                {% csrf_token %}
-            </div>
-        </form>
-    </div>
-
+    
 
     <div class="table-responsive">
         <table class="table table-sm" style="width: 100%">
             <thead>
+                <tr>
+                    <th colspan="7" style="text-align: right;">
+                        <form action="" enctype="multipart/form-data" method="post" class="container needs-validation" novalidate>
+                            <div class="table-responsive">
+                                {% for field in form %}
+                                    {{ field.label_tag }} {{ field }}
+                                {% endfor %}
+                                <input type="submit" value="Go" class="form-control-file"/>
+                                {% csrf_token %}
+                            </div>
+                        </form>
+                    </th>
+                </tr>
+                <tr><th colspan="7"><h3>Category: {{ category_name }}</h3></th></tr>
                 <tr>
                     <th scope="col" style="width: 5%">ID</th>
                     <th scope="col" style="width: 33%">Title</th>

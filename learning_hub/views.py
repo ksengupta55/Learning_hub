@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, render
 
 from lh_project import settings
 
-from .models import Lesson
+from .models import Lesson, Category
 from .forms import LessonForm, CategoryForm
 
 import PyPDF2
@@ -27,23 +27,26 @@ def index(request):
     """The home page for Learning Hub."""
     return(render(request, 'learning_hub/base.html'))
 
+@login_required
 def filtered_lesson(request):
     form = CategoryForm(request.POST, request.FILES) 
     cat = request.POST.get('category') 
-    print("Category ID: ", cat)  
+
     lesson = Lesson.objects.all()
  
     if cat == None or cat == '':
         lesson_list = lesson
+        category_name = "All"
     else:    
         lesson_list = lesson.filter(category__id=cat)
+        category_name = Category.objects.filter(id=cat).values_list('name', flat=True).first()
 
-       
+    print("Category ID and name: ", cat, category_name)     
     #lesson_list = Lesson.objects.select_related('category').order_by('category')
     paginator = Paginator(lesson_list, settings.MAX_LESSON_LIST)  # Show 25 contacts per page.
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
-    return render(request, "learning_hub/filtered_lesson.html", {"form": form, "page_obj": page_obj, "lesson": lesson})
+    return render(request, "learning_hub/filtered_lesson.html", {"form": form, "page_obj": page_obj, "category_name": category_name})
 
 '''def filtered_lesson(request):
     lesson = Lesson.objects.all()
@@ -200,6 +203,7 @@ def getCategory(id):
     return results
 
 
+@login_required
 def search(request):
     # Check if the request is a POST request (i.e., button click)
     if request.method == 'POST':
@@ -314,6 +318,7 @@ def tokenize(block):
 
     return tokens
 
+@login_required
 def lesson_delete(request, id = None):
     instance = get_object_or_404(Lesson, id=id)
     

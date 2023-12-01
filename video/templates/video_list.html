@@ -1,12 +1,39 @@
 {% extends "learning_hub/base.html" %}
 
+{% load static %}
+
 {% block main %}
-<h1>Video Database</h1>   
-<div class="container">
-  {% for x in video %}
-    <h3 class="text-center mt-2 mb-2">{{ x.caption }}</h3>
-    <video width="320" height="240" src="{{ x.video.url }}" class="object-fit-scale" type="video/mp4" controls></video>
+  <h1>Video Database</h1>   
+  <div class="container">
+    <!--<h3 class="text-center mt-2 mb-2">{{ x.caption }}</h3>-->
+    <!--<video width="320" height="240" src="{{ x.video.url }}" class="object-fit-scale" type="video/mp4" controls></video>-->
+
+    <div class= "table-responsive">
+      <table class="table table-sm" style="width: 95%">
+        <thead>
+          <tr>
+            <th scope="col" style="width: 50%">Caption</th>
+            <th scope="col" style="width: 45%">Video</th>
+            {% if user.username == 'admin' %}
+              <th scope="col" style="width: 5%">Delete</th>
+            {% endif %}  
+          </tr>
+        </thead>
+        {% for x in video %}
+        <tbody>
+          <tr scope="row">
+            <td>{{ x.caption }}</td>
+            <td><a class="btn btn-primary btn-sm;" href="{{ x.video.url }}" target="_blank">Play&nbsp;video</a></td>
+            {% if user.username == 'admin' %}
+              <td><a href="video_delete/{{ x.id }}"><img class="img-fluid" src="{% static 'delete_icon.png' %}" alt=""/></a></td>
+            {% endif %}
+          </tr>
+        </tbody>
+        {% endfor %}
+      </table>
+    </div>
+  
       <!--<a class="btn btn-secondary btn-sm;" href="{{ x.video }}" role="button" target="_blank">View</a>-->
-  {% endfor %}
-</div>
+
+  </div>
 {% endblock %}
